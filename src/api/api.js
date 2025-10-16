@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const API_BASE = "https://apis.allsoft.co/api/documentManagement"
+
 export const api = axios.create({
-    baseURL: process.env.API_BASE,
+    baseURL: API_BASE,
 })
 
 export const generateOTP = (mobileNumber) => {
