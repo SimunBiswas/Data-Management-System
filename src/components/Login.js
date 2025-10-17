@@ -63,19 +63,23 @@ function Login() {
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <Card style={{ width: "350px" }}>
-        <Card.Body>
-          <Card.Title className="text-center mb-4">Login via OTP</Card.Title>
+        <Card.Body className="shadow-lg">
 
+          <h3 className="text-center mb-4 bg-primary bg-subtle text-white rounded p-3" style={{"color" : "#202B51 !important"}}>Login</h3>
+          <img src="./DocumentManagement.png" alt="img" style={{"width" : "300px"}} />
+          <h2 style={{"color" : "#202B51 !important"}} className="text-primary fs-4 text-center fw-semibold p-3">Document <br /> Management Model</h2>
           {error && <Alert variant="danger">{error}</Alert>}
 
           {step === 1 ? (
             <>
               <Form.Group className="mb-3">
+                <label className="ms-2">Enter Mobile Number</label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter Mobile Number"
+                  placeholder="Enter Here..."
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
+                  className="mt-3"
                 />
               </Form.Group>
               <Button

@@ -57,119 +57,142 @@ const addTag = () => {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto border rounded-lg mt-10 bg-white shadow">
-      <h2 className="text-xl font-semibold mb-4 text-center">Upload Document</h2>
 
-      <div className="mb-3">
-        <label htmlFor="majorHead">Major Head</label>
-        <select
-            className="form-select"
-            value={majorHead}
-            onChange={(e) => {
-              setMajorHead(e.target.value);
-              setMinorHead(""); // reset minor on major change
-            }}
-          >
-            <option>Personal</option>
-            <option>Professional</option>
-          </select>
-      </div>
-
-      <div className="col-md-3 mb-2">
-          <label>{majorHead === "Personal" ? "Name" : "Department"}</label>
-          <select
-            className="form-select"
-            value={minorHead}
-            onChange={(e) => setMinorHead(e.target.value)}
-          >
-            <option value="">Select...</option>
-            {minorOptions.map((m) => (
-              <option key={m} value={m}>
-                {m}
-              </option>
-            ))}
-          </select>
+    
+    <div className="container my-5">
+  <div className="row justify-content-center">
+    <div className="col-12 col-md-8 col-lg-6">
+      <div className="card shadow-lg border-0 rounded-4">
+        <div className="card-header bg-primary text-white text-center py-3">
+          <h4 className="mb-0">Upload Document</h4>
         </div>
+        <div className="card-body p-4">
+          <form>
+            {/* Major Head */}
+            <div className="mb-3">
+              <label htmlFor="majorHead" className="form-label fw-semibold">Major Head</label>
+              <select
+                id="majorHead"
+                className="form-select"
+                value={majorHead}
+                onChange={(e) => {
+                  setMajorHead(e.target.value);
+                  setMinorHead(""); // reset minor on major change
+                }}
+              >
+                <option>Personal</option>
+                <option>Professional</option>
+              </select>
+            </div>
 
-      <div className="mb-3">
-        <label >Document Date</label>
-        <input
-          type="date"
-          id="documentDate"
-          value={documentDate}
-          onChange={(e) => setDocumentDate(e.target.value)}
-          className="border w-full p-2 rounded"
-        />
-      </div>
+            {/* Minor Head */}
+            <div className="mb-3">
+              <label className="form-label fw-semibold">
+                {majorHead === "Personal" ? "Name" : "Department"}
+              </label>
+              <select
+                className="form-select"
+                value={minorHead}
+                onChange={(e) => setMinorHead(e.target.value)}
+              >
+                <option value="">Select...</option>
+                {minorOptions.map((m) => (
+                  <option key={m} value={m}>{m}</option>
+                ))}
+              </select>
+            </div>
 
-      <div className="mb-3">
-        <input
-          type="text"
-          placeholder="Remarks"
-          value={remarks}
-          onChange={(e) => setRemarks(e.target.value)}
-          className="border w-full p-2 rounded"
-        />
-      </div>
+            {/* Document Date */}
+            <div className="mb-3">
+              <label htmlFor="documentDate" className="form-label fw-semibold">Document Date</label>
+              <input
+                type="date"
+                id="documentDate"
+                value={documentDate}
+                onChange={(e) => setDocumentDate(e.target.value)}
+                className="form-control"
+              />
+            </div>
 
-       {/* Tags */}
-       <div className="mt-3">
-        <label>Tags</label>
-        <div className="d-flex gap-2">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter tag"
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && addTag()}
-          />
-          <button className="btn btn-secondary" onClick={addTag}>
-            Add
-          </button>
+            {/* Remarks */}
+            <div className="mb-3">
+              <label className="form-label fw-semibold">Remarks</label>
+              <input
+                type="text"
+                placeholder="Remarks"
+                value={remarks}
+                onChange={(e) => setRemarks(e.target.value)}
+                className="form-control"
+              />
+            </div>
+
+            {/* Tags */}
+            <div className="mb-3">
+              <label className="form-label fw-semibold">Tags</label>
+              <div className="d-flex gap-2 mb-2">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter tag"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && addTag()}
+                />
+                <button type="button" className="btn btn-secondary" onClick={addTag}>Add</button>
+              </div>
+              <div>
+                {tags.map((t) => (
+                  <span key={t} className="badge bg-info text-dark me-2">
+                    {t}
+                    <button
+                      type="button"
+                      className="btn-close btn-close-white btn-sm ms-1"
+                      aria-label="Remove"
+                      onClick={() => removeTag(t)}
+                    ></button>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* User ID */}
+            <div className="mb-3">
+              <label className="form-label fw-semibold">User ID</label>
+              <input
+                type="text"
+                placeholder="User ID"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value.toLowerCase())}
+                className="form-control"
+              />
+            </div>
+
+            {/* File Upload */}
+            <div className="mb-4">
+              <label className="form-label fw-semibold">Upload File</label>
+              <input
+                type="file"
+                onChange={(e) => setFile(e.target.files[0])}
+                className="form-control"
+                accept=".pdf,.png,.jpg,.jpeg"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="button"
+              className="btn btn-primary w-100 py-2 fw-bold"
+              onClick={handleUpload}
+              disabled={loading}
+            >
+              {loading ? "Uploading..." : "Upload File"}
+            </button>
+          </form>
         </div>
-        <div className="mt-2">
-          {tags.map((t) => (
-            <span key={t} className="badge bg-info me-2">
-              {t}{" "}
-              <button
-                type="button"
-                className="btn-close btn-close-white btn-sm ms-1"
-                aria-label="Remove"
-                onClick={() => removeTag(t)}
-              ></button>
-            </span>
-          ))}
-        </div>
       </div>
-
-      <div className="mb-3">
-        <label>Name : </label>
-        <input
-          type="text"
-          placeholder="User ID"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value.toLowerCase())}
-          className="border w-full p-2 rounded"
-        />
-      </div>
-
-      <div className="mb-3">
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-          className="w-full"
-          accept=".pdf,.png,.jpg,.jpeg"
-        />
-      </div>
-
-      <button
-        onClick={handleUpload}
-        className="bg-purple-500 text-white px-4 py-2 rounded w-full"
-        disabled={loading}
-      >
-        {loading ? "Uploading..." : "Upload File"}
-      </button>
     </div>
+  </div>
+</div>
+
   );
 }
