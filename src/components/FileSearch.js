@@ -326,39 +326,12 @@ const FileSearch = ({ token }) => {
                     </div>
 
                     {/* Pagination */}
-                    <Pagination />
-                    {filteredResults.length > itemsPerPage && (
-                      <nav>
-                        <ul className="pagination justify-content-center mt-3">
-                          <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                            <button
-                              className="page-link"
-                              onClick={() => setCurrentPage((prev) => prev - 1)}
-                            >
-                              Previous
-                            </button>
-                          </li>
-                          {[...Array(totalPages)].map((_, idx) => (
-                            <li
-                              key={idx}
-                              className={`page-item ${currentPage === idx + 1 ? "active" : ""}`}
-                            >
-                              <button className="page-link" onClick={() => setCurrentPage(idx + 1)}>
-                                {idx + 1}
-                              </button>
-                            </li>
-                          ))}
-                          <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-                            <button
-                              className="page-link"
-                              onClick={() => setCurrentPage((prev) => prev + 1)}
-                            >
-                              Next
-                            </button>
-                          </li>
-                        </ul>
-                      </nav>
-                    )}
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={(page) => setCurrentPage(page)}
+                    />
+
 
                     <div className="mt-3">
                       <button className="btn btn-outline-primary" onClick={handleDownloadAll}>
