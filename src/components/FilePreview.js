@@ -30,7 +30,7 @@ const FilePreview = ({ file }) => {
             />
           ) : (
             <p>
-              Preview not available. <a href={file.file_url} target="_blank">Open File</a>
+              Preview not available. <a href={file.file_url} target="_blank" rel="noreferrer">Open File</a>
             </p>
           )}
         </>
