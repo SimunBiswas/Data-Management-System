@@ -61,7 +61,9 @@ function Login() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
+    <div className="d-flex justify-content-center align-items-center vh-100"
+      style={{ backgroundColor: "#475586" }}
+    >
       <Card style={{ width: "350px" }}>
         <Card.Body className="shadow-lg">
 

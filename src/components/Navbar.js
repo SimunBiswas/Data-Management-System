@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
@@ -11,12 +11,16 @@ export default function Navbar() {
     navigate("/"); // Redirect to login
   };
 
+  // Function to determine active link style
+  const getNavLinkClass = ({ isActive }) =>
+    isActive ? "nav-link text-white fw-bold" : "nav-link text-secondary";
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
-        <Link className="navbar-brand" to="/">
-          DMS
-        </Link>
+        <NavLink className="navbar-brand" to="/">
+          <span className="fw-semibold">Document Management System</span>
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -33,14 +37,14 @@ export default function Navbar() {
           {token ? (
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/upload">
+                <NavLink to="/upload" className={getNavLinkClass}>
                   Upload
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/search">
+                <NavLink to="/search" className={getNavLinkClass}>
                   Search
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
                 <button
@@ -54,9 +58,9 @@ export default function Navbar() {
           ) : (
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/">
+                <NavLink to="/" className={getNavLinkClass}>
                   Login
-                </Link>
+                </NavLink>
               </li>
             </ul>
           )}

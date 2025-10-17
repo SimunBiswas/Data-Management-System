@@ -59,17 +59,27 @@ const addTag = () => {
   return (
 
     
-    <div className="container my-5">
+  <div className="container-fluid vh-100 py-5 overflow-hidden"              
+  style={{ backgroundColor: "#475586" }}
+  >
   <div className="row justify-content-center">
     <div className="col-12 col-md-8 col-lg-6">
       <div className="card shadow-lg border-0 rounded-4">
-        <div className="card-header bg-primary text-white text-center py-3">
+        <div className="card-header text-white text-center py-3"
+          style={{ backgroundColor: "#202B51" }}
+
+        >
           <h4 className="mb-0">Upload Document</h4>
         </div>
-        <div className="card-body p-4">
+        <div className="card-body p-4 rounded-bottom"
+        style={{ backgroundColor: "#DDE3FA" }}>
+          <div className="row">
+            
+          </div>
           <form>
-            {/* Major Head */}
-            <div className="mb-3">
+            <div className="row">
+              {/* Major Head */}
+            <div className="col-md-6 mb-3">
               <label htmlFor="majorHead" className="form-label fw-semibold">Major Head</label>
               <select
                 id="majorHead"
@@ -86,7 +96,7 @@ const addTag = () => {
             </div>
 
             {/* Minor Head */}
-            <div className="mb-3">
+            <div className="col-md-6 mb-3">
               <label className="form-label fw-semibold">
                 {majorHead === "Personal" ? "Name" : "Department"}
               </label>
@@ -101,9 +111,11 @@ const addTag = () => {
                 ))}
               </select>
             </div>
+            </div>
 
-            {/* Document Date */}
-            <div className="mb-3">
+            <div className="row">
+              {/* Document Date */}
+            <div className="col-md-6 mb-3">
               <label htmlFor="documentDate" className="form-label fw-semibold">Document Date</label>
               <input
                 type="date"
@@ -115,7 +127,7 @@ const addTag = () => {
             </div>
 
             {/* Remarks */}
-            <div className="mb-3">
+            <div className="col-md-6 mb-3">
               <label className="form-label fw-semibold">Remarks</label>
               <input
                 type="text"
@@ -124,6 +136,7 @@ const addTag = () => {
                 onChange={(e) => setRemarks(e.target.value)}
                 className="form-control"
               />
+            </div>
             </div>
 
             {/* Tags */}
@@ -138,7 +151,7 @@ const addTag = () => {
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addTag()}
                 />
-                <button type="button" className="btn btn-secondary" onClick={addTag}>Add</button>
+                <button type="button" className="btn btn-secondary fw-semibold" onClick={addTag}>Add</button>
               </div>
               <div>
                 {tags.map((t) => (
@@ -179,7 +192,14 @@ const addTag = () => {
             </div>
 
             {/* Submit Button */}
-            <button
+            <div className="row">
+              <div className="col-md-6 text-center">
+              <img src="/Upload.png" alt="upload" style={{"width" : "150px", "height" : "150px"}}/>
+
+              </div>
+
+              <div className="col-md-6 mt-5">
+              <button
               type="button"
               className="btn btn-primary w-100 py-2 fw-bold"
               onClick={handleUpload}
@@ -187,7 +207,12 @@ const addTag = () => {
             >
               {loading ? "Uploading..." : "Upload File"}
             </button>
+              </div>
+            </div>
+            
           </form>
+
+          
         </div>
       </div>
     </div>

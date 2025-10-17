@@ -2,6 +2,7 @@
 import React from "react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+    console.log(currentPage, totalPages, onPageChange)
   if (totalPages <= 1) return null;
 
   const createPageNumbers = () => {

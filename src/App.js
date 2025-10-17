@@ -16,7 +16,8 @@ const AppRoutes = () => {
   console.log("App component token:", token);
 
   return (
-    <div>
+    <div style={{ "background" : "#475586"}}
+    className='vh-100'>
       <Navbar/>
       <Routes>
       {token === null ? (
