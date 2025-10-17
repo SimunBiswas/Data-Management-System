@@ -316,12 +316,12 @@ const FileSearch = ({ token }) => {
               
               <div className="row">
                 {/* Search & Live Search */}
-                <div className="col-md-2 d-grid mt-3" style={{"height" : "50px"}}>
+                <div className="col-md-2 d-grid my-4" style={{"height" : "50px"}}>
                   <button className="btn btn-primary rounded-4" onClick={handleSearch} disabled={loading}>
                     {loading ? "Searching..." : "Search"}
                   </button>
                 </div>
-                <div className="col-md-6 text-center"><
+                <div className="col-md-6 text-center my-2"><
                   img src="/Search.png" alt="searchImg" style={{"width" : "150px", "height" : "150px"}}/>
                 </div>
                 <div className=" col-md-4 mb-3">

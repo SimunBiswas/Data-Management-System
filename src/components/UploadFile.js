@@ -59,7 +59,7 @@ const addTag = () => {
   return (
 
     
-  <div className="container-fluid vh-100 py-5 overflow-hidden"              
+  <div className="container-fluid vh-100 py-5 overflow-x-hidden"              
   style={{ backgroundColor: "#475586" }}
   >
   <div className="row justify-content-center">
