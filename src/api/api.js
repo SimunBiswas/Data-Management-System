@@ -13,8 +13,34 @@ export const api = axios.create({
 export const generateOTP = (mobile_number) =>
   api.post("/generateOTP", { mobile_number });
 
-export const validateOTP = (mobile_number, otp) =>
-  api.post("/validateOTP", { mobile_number, otp });
+export const validateOTP = async (mobile, otp) => {
+  try {
+    const response = await fetch("https://apis.allsoft.co/api/documentManagement/validateOTP", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": `Bearer ${token}`, // if needed
+      },
+      body: JSON.stringify({
+        mobile_number: mobile, // make sure this matches the API
+        otp: otp
+      }),
+    });
+
+    // Check if HTTP status is OK
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json(); // parse JSON response
+    console.log("Validate OTP response:", data); // log response
+    return data; // return to your component
+  } catch (error) {
+    console.error("Error validating OTP:", error);
+    return { status: false, data: error.message };
+  }
+};
+
 
 // Logout
 export const logout = () => {
