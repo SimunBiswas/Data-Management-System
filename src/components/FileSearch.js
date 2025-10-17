@@ -1,7 +1,8 @@
 // src/components/FileSearch.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { searchDocument } from "../api/api";
 import FilePreviewModal from "./FilePreviewModal";
+import { Pagination } from "react-bootstrap";
 
 const FileSearch = ({ token }) => {
   const [major, setMajor] = useState("Personal");
@@ -10,16 +11,16 @@ const FileSearch = ({ token }) => {
   const [tagInput, setTagInput] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [userId, setUserId] = useState("");
   const [results, setResults] = useState([]);
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [previewFile, setPreviewFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [userId, setUserId] = useState("nitin");
 
-  // Pagination state
+  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
-  console.log("token from local storage", token);
 
   // Dynamic minor options
   const minorOptions =
@@ -29,7 +30,7 @@ const FileSearch = ({ token }) => {
       ? ["Google", "Microsoft", "Apple", "Amazon"]
       : ["Accounts", "HR", "IT", "Finance"];
 
-  // Add a tag
+  // Add tag
   const addTag = () => {
     if (tagInput && !tags.includes(tagInput)) {
       setTags([...tags, tagInput]);
@@ -37,42 +38,53 @@ const FileSearch = ({ token }) => {
     }
   };
 
-  // Remove a tag
+  // Remove tag
   const removeTag = (t) => {
     setTags(tags.filter((tag) => tag !== t));
   };
 
-  // Prepare tags for API request
-  const getTagsForRequest = () => {
-    return tags.length > 0 ? tags.map((t) => ({ tag_name: t })) : [{ tag_name: "" }];
-  };
+  const getTagsForRequest = () =>
+    tags.length > 0 ? tags.map((t) => ({ tag_name: t })) : [{ tag_name: "" }];
 
-  // Search handler
+  // Search handler (fetch from API)
   const handleSearch = async () => {
     setLoading(true);
-    setCurrentPage(1); // reset pagination on new search
+    setCurrentPage(1);
 
     const body = {
       major_head: major || "",
       minor_head: minor || "",
       from_date: fromDate || "",
       to_date: toDate || "",
-      tags: getTagsForRequest() || [{ tag_name: "" }, { tag_name: "" }],
-      uploaded_by: "",
+      tags: getTagsForRequest(),
+      uploaded_by: userId || "",
       start: 0,
-      length: 1000, // fetch all for frontend pagination
+      length: 1000,
       filterId: "",
       search: { value: "" },
     };
 
-    console.log("Search payload:", JSON.stringify(body, null, 2));
-
     try {
       const res = await searchDocument(token, body);
-      console.log("Full Response:", res.data.data);
-
       const docs = res.data?.data || [];
-      setResults(docs);
+
+      // Client-side filtering based on selected filters
+      const filteredDocs = docs.filter((doc) => {
+        if (major && doc.major_head !== major) return false;
+        if (minor && doc.minor_head !== minor) return false;
+        if (userId && !doc.uploaded_by.toLowerCase().includes(userId.toLowerCase()))
+          return false;
+        if (tags.length > 0) {
+          const docTags = doc.tags?.map((t) => t.tag_name) || [];
+          if (!tags.every((t) => docTags.includes(t))) return false;
+        }
+        if (fromDate && new Date(doc.document_date) < new Date(fromDate)) return false;
+        if (toDate && new Date(doc.document_date) > new Date(toDate)) return false;
+        return true;
+      });
+
+      setResults(filteredDocs);
+      setFilteredResults(filteredDocs);
     } catch (error) {
       console.error("Search failed:", error.response || error);
       alert("❌ Failed to fetch documents!");
@@ -81,13 +93,41 @@ const FileSearch = ({ token }) => {
     }
   };
 
-  // Simulate download
+  // Live search effect
+  useEffect(() => {
+    if (!searchQuery) {
+      setFilteredResults(results);
+      return;
+    }
+    const query = searchQuery.toLowerCase();
+
+    const liveFiltered = results.filter((doc) => {
+      return (
+        (doc.document_name?.toLowerCase().includes(query) ||
+          doc.major_head?.toLowerCase().includes(query) ||
+          doc.minor_head?.toLowerCase().includes(query) ||
+          doc.uploaded_by?.toLowerCase().includes(query) ||
+          doc.document_remarks?.toLowerCase().includes(query) ||
+          (doc.tags?.some((t) => t.tag_name.toLowerCase().includes(query)) ?? false))
+      );
+    });
+
+    setFilteredResults(liveFiltered);
+    setCurrentPage(1); // reset pagination on live search
+  }, [searchQuery, results]);
+
+  // Pagination calculations
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentResults = filteredResults.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredResults.length / itemsPerPage);
+
+  // Download
   const handleDownload = (file) => {
-    const fileUrl = file.file_url;
-    if (!fileUrl) return alert("File URL not available");
+    if (!file.file_url) return alert("File URL not available");
 
     const link = document.createElement("a");
-    link.href = fileUrl;
+    link.href = file.file_url;
     link.download = file.major_head || "download";
     document.body.appendChild(link);
     link.click();
@@ -98,26 +138,20 @@ const FileSearch = ({ token }) => {
     alert("Simulated download of all results as ZIP!");
   };
 
-  // Pagination calculations
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentResults = results.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(results.length / itemsPerPage);
-
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12 col-lg-10">
           <div className="card shadow-lg border-0 rounded-4">
             <div
-              className="card-header bg-primary text-white text-center py-3"
+              className="card-header text-white text-center py-3"
               style={{ backgroundColor: "#B7C1E4", color: "#202B51" }}
             >
               <h4 className="mb-0">Search Documents</h4>
             </div>
             <div className="card-body p-4">
               {/* Filters */}
-              <div className="row g-3">
+              <div className="row g-3 mb-3">
                 <div className="col-md-3">
                   <label className="form-label fw-semibold">Category</label>
                   <select
@@ -133,7 +167,6 @@ const FileSearch = ({ token }) => {
                     <option>Company</option>
                   </select>
                 </div>
-
                 <div className="col-md-3">
                   <label className="form-label fw-semibold">
                     {major === "Personal"
@@ -155,7 +188,6 @@ const FileSearch = ({ token }) => {
                     ))}
                   </select>
                 </div>
-
                 <div className="col-md-3">
                   <label className="form-label fw-semibold">From Date</label>
                   <input
@@ -165,7 +197,6 @@ const FileSearch = ({ token }) => {
                     onChange={(e) => setFromDate(e.target.value)}
                   />
                 </div>
-
                 <div className="col-md-3">
                   <label className="form-label fw-semibold">To Date</label>
                   <input
@@ -177,18 +208,15 @@ const FileSearch = ({ token }) => {
                 </div>
               </div>
 
-              {/* User ID */}
-              <div className="mb-3 mt-3">
-                <label className="form-label fw-semibold" htmlFor="userId">
-                  Name
-                </label>
+              {/* Uploaded By */}
+              <div className="mb-3">
+                <label className="form-label fw-semibold">Name</label>
                 <input
                   type="text"
-                  id="userId"
-                  value={userId}
-                  onChange={(e) => setUserId(e.target.value)}
                   className="form-control"
                   placeholder="Enter user ID"
+                  value={userId}
+                  onChange={(e) => setUserId(e.target.value)}
                 />
               </div>
 
@@ -204,7 +232,7 @@ const FileSearch = ({ token }) => {
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && addTag()}
                   />
-                  <button type="button" className="btn btn-secondary" onClick={addTag}>
+                  <button className="btn btn-secondary" onClick={addTag}>
                     Add
                   </button>
                 </div>
@@ -217,23 +245,33 @@ const FileSearch = ({ token }) => {
                         className="btn-close btn-close-white btn-sm ms-1"
                         aria-label="Remove"
                         onClick={() => removeTag(t)}
-                      ></button>
+                      />
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Search Button */}
-              <div className="d-grid mb-4">
+              {/* Search & Live Search */}
+              <div className="d-grid mb-3">
                 <button className="btn btn-primary" onClick={handleSearch} disabled={loading}>
                   {loading ? "Searching..." : "Search"}
                 </button>
               </div>
 
+              <div className="mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Live search results..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+
               {/* Results Table */}
               <div>
                 <h5>Results</h5>
-                {results.length === 0 ? (
+                {filteredResults.length === 0 ? (
                   <p>No documents found.</p>
                 ) : (
                   <>
@@ -288,7 +326,8 @@ const FileSearch = ({ token }) => {
                     </div>
 
                     {/* Pagination */}
-                    {results.length > itemsPerPage && (
+                    <Pagination />
+                    {filteredResults.length > itemsPerPage && (
                       <nav>
                         <ul className="pagination justify-content-center mt-3">
                           <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
@@ -299,21 +338,16 @@ const FileSearch = ({ token }) => {
                               Previous
                             </button>
                           </li>
-
                           {[...Array(totalPages)].map((_, idx) => (
                             <li
                               key={idx}
                               className={`page-item ${currentPage === idx + 1 ? "active" : ""}`}
                             >
-                              <button
-                                className="page-link"
-                                onClick={() => setCurrentPage(idx + 1)}
-                              >
+                              <button className="page-link" onClick={() => setCurrentPage(idx + 1)}>
                                 {idx + 1}
                               </button>
                             </li>
                           ))}
-
                           <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
                             <button
                               className="page-link"
