@@ -8,10 +8,9 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate("/"); // Redirect to login
+    navigate("/"); 
   };
 
-  // Function to determine active link style
   const getNavLinkClass = ({ isActive }) =>
     isActive ? "nav-link text-white fw-bold" : "nav-link text-secondary";
 

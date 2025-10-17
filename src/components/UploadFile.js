@@ -12,10 +12,10 @@ export default function UploadFile({ token }) {
   const [tagInput, setTagInput] = useState("");
   const [userId, setUserId] = useState("");
 
-  const minorOptions =
-  majorHead === "Personal"
-    ? ["John", "Tom", "Emily", "Simun"]
-    : ["Accounts", "HR", "IT", "Finance"];
+const minorOptions =
+majorHead === "Personal"
+  ? ["John", "Tom", "Emily", "Simun"]
+  : ["Accounts", "HR", "IT", "Finance"];
 
 // Add a tag
 const addTag = () => {
@@ -31,30 +31,31 @@ const addTag = () => {
 };
 
 
-  const handleUpload = async () => {
-    if (!file) return alert("Please select a file first");
+// handle upload
+const handleUpload = async () => {
+  if (!file) return alert("Please select a file first");
 
-    const data = {
-      file,
-      major_head: majorHead || "Company",
-      minor_head: minorHead || "Work Order",
-      document_date: documentDate || "12-02-2024",
-      document_remarks: remarks || "No remarks",
-      tags: tags.length > 0 ? tags.map((t) => ({ tag_name: t })) : [{ tag_name: "" }],
-      user_id: userId || "nitin",
-    };
-
-    setLoading(true);
-    try {
-      // const res = await uploadDocument(token, file, data);
-      await uploadDocument(token, file, data);
-      alert("File uploaded successfully!");
-    } catch (error) {
-      console.error("Upload error:", error);
-      alert("Failed to upload file");
-    }
-    setLoading(false);
+  const data = {
+    file,
+    major_head: majorHead || "Company",
+    minor_head: minorHead || "Work Order",
+    document_date: documentDate || "12-02-2024",
+    document_remarks: remarks || "No remarks",
+    tags: tags.length > 0 ? tags.map((t) => ({ tag_name: t })) : [{ tag_name: "" }],
+    user_id: userId || "nitin",
   };
+
+  setLoading(true);
+  try {
+    // const res = await uploadDocument(token, file, data);
+    await uploadDocument(token, file, data);
+    alert("File uploaded successfully!");
+  } catch (error) {
+    console.error("Upload error:", error);
+    alert("Failed to upload file");
+  }
+  setLoading(false);
+};
 
   return (
 
@@ -78,6 +79,7 @@ const addTag = () => {
           </div>
           <form>
             <div className="row">
+
               {/* Major Head */}
             <div className="col-md-6 mb-3">
               <label htmlFor="majorHead" className="form-label fw-semibold">Major Head</label>
@@ -114,6 +116,7 @@ const addTag = () => {
             </div>
 
             <div className="row">
+              
               {/* Document Date */}
             <div className="col-md-6 mb-3">
               <label htmlFor="documentDate" className="form-label fw-semibold">Document Date</label>

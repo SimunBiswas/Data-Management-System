@@ -1,4 +1,3 @@
-// src/components/FileSearch.jsx
 import { useState, useEffect } from "react";
 import { searchDocument } from "../api/api";
 import FilePreview from "./FilePreview";
@@ -135,20 +134,20 @@ const FileSearch = ({ token }) => {
   const totalPages = Math.ceil(filteredResults.length / itemsPerPage);
 
     // Preview handler
-    const handlePreview = (file) => {
-      if (!file.file_url) return alert("File URL not available");
-  
-      const ext = file.file_url.split(".").pop().split("?")[0].toLowerCase();
-      if (["png", "jpg", "jpeg", "gif"].includes(ext)) {
-        // Show image preview
-        setPreviewFile({ type: "image", url: file.file_url, name: file.major_head });
-      } else if (ext === "pdf") {
-        // Open PDF in new tab
-        window.open(file.file_url, "_blank");
-      } else {
-        alert("Preview not available for this file type");
-      }
-    };
+  const handlePreview = (file) => {
+    if (!file.file_url) return alert("File URL not available");
+
+    const ext = file.file_url.split(".").pop().split("?")[0].toLowerCase();
+    if (["png", "jpg", "jpeg", "gif"].includes(ext)) {
+      // Show image preview
+      setPreviewFile({ type: "image", url: file.file_url, name: file.major_head });
+    } else if (ext === "pdf") {
+      // Open PDF in new tab
+      window.open(file.file_url, "_blank");
+    } else {
+      alert("Preview not available for this file type");
+    }
+  };
 
   // Download
   const handleDownload = (file) => {
@@ -259,11 +258,11 @@ const FileSearch = ({ token }) => {
                 <div className="col-md-3">
                   <label className="form-label fw-semibold">From Date</label>
                   <input
-  type="date"
-  className="form-control"
-  value={fromDate}
-  onChange={(e) => setFromDate(e.target.value)}
-/>
+                    type="date"
+                    className="form-control"
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
+                  />
 
                 </div>
                 <div className="col-md-3">

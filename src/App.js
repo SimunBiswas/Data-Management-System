@@ -4,12 +4,10 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthContext, AuthProvider } from './context/AuthContext';
 import Login from './components/Login';
-// import FileUpload from './components/FileUpload';
 import FileSearch from './components/FileSearch';
 import UploadFile from './components/UploadFile';
 import  Navbar from './components/Navbar';
 
-// 🔹 Separate component to use context properly
 const AppRoutes = () => {
     
   const { token } = useContext(AuthContext);
