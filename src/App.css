@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+
+.h-20vh{
+  height : 20em;
+}
+
+.card-title.customBlueText {
+  color: #1F41BB !important;
+}
+
+.customBlueText{
+  color : #1F41BB !important;
+}
+
+.bg-primary {
+  background-color : black
+}
