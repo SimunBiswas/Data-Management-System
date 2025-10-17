@@ -7,6 +7,7 @@ import Login from './components/Login';
 // import FileUpload from './components/FileUpload';
 import FileSearch from './components/FileSearch';
 import UploadFile from './components/UploadFile';
+import  Navbar from './components/Navbar';
 
 // 🔹 Separate component to use context properly
 const AppRoutes = () => {
@@ -15,7 +16,9 @@ const AppRoutes = () => {
   console.log("App component token:", token);
 
   return (
-    <Routes>
+    <div>
+      <Navbar/>
+      <Routes>
       {!token ? (
         // 🔸 If user is not logged in → show Login
         <Route path="/" element={<Login />} />
@@ -28,6 +31,7 @@ const AppRoutes = () => {
         </>
       )}
     </Routes>
+    </div>
   );
 };
 
