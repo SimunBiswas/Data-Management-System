@@ -69,7 +69,7 @@ function Login() {
 
           <h3 className="text-center mb-4 bg-primary bg-subtle text-white rounded p-3" style={{"color" : "#202B51 !important"}}>Login</h3>
           <img src="./DocumentManagement.png" alt="img" style={{"width" : "300px"}} />
-          <h2 style={{"color" : "#202B51 !important"}} className="text-primary fs-4 text-center fw-semibold p-3">Document <br /> Management Model</h2>
+          <h2 style={{"color" : "#202B51 !important"}} className="text-primary fs-4 text-center fw-semibold p-3">Document <br /> Management System</h2>
           {error && <Alert variant="danger">{error}</Alert>}
 
           {step === 1 ? (
