@@ -19,7 +19,7 @@ const AppRoutes = () => {
     <div>
       <Navbar/>
       <Routes>
-      {!token ? (
+      {token === null ? (
         // 🔸 If user is not logged in → show Login
         <Route path="/" element={<Login />} />
       ) : (
