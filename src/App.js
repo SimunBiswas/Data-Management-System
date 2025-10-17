@@ -13,7 +13,6 @@ import  Navbar from './components/Navbar';
 const AppRoutes = () => {
     
   const { token } = useContext(AuthContext);
-  console.log("App component token:", token);
 
   return (
     <div style={{ "background" : "#475586"}}

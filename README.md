@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# Document Management System - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the **frontend** of a Document Management System (DMS) built using **React** and **Bootstrap CSS**. It allows users to log in via **OTP**, upload documents, search for documents, and manage files efficiently.  
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Available Scripts](#available-scripts)
+- [API Integration](#api-integration)
+- [Folder Structure](#folder-structure)
+- [License](#license)
 
-Runs the app in the development mode.\
+---
+
+## Project Overview
+
+This project provides a **user-friendly interface** for a document management system. Users can:
+
+- Login using **OTP authentication**.
+- Upload documents with **categories, tags, remarks, and date**.
+- Search and preview documents.
+- Download individual or multiple files.
+- Responsive layout for desktop and mobile devices.
+
+> Note: Backend APIs are handled by the provided `.NET` endpoints.
+
+---
+
+## Features
+
+1. **OTP Login**  
+   - Mobile number input
+   - OTP input
+   - Validation & token storage in `localStorage`
+
+2. **Responsive UI**  
+   - Centered login card  
+   - Bootstrap CSS for styling  
+   - Smooth focus states and buttons
+
+3. **Error Handling**  
+   - Alerts for invalid input or failed API calls
+
+4. **Integration Ready**  
+   - Designed to connect with backend endpoints for OTP, upload, and search functionality
+
+---
+
+## Tech Stack
+
+- **Frontend:** React.js  
+- **Styling:** Bootstrap CSS  
+- **State Management:** React Hooks (`useState`, `useEffect`,  `useContext`)  
+- **Routing:** React Router v6  
+- **HTTP Requests:** Axios
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js >= 18.x
+- npm or yarn
+
+### Installation
+
+```bash
+
+# Clone the repository
+git clone <your-repo-url>
+cd <repo-folder>
+
+# Install dependencies
+npm install
+# or
+yarn install
+
+# Run Your Project
+
+npm start
+
+# Run the app in development mode.\
+
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
