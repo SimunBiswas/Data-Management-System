@@ -18,6 +18,7 @@ export default function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <NavLink className="navbar-brand" to="/">
+          <img src="logo1.png" alt="logo" style={{ "width" : "30px"}} className="me-3" />
           <span className="fw-semibold">Document Management System</span>
         </NavLink>
         <button
