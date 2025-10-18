@@ -1,6 +1,6 @@
-# Document Management System - Frontend
+# Simplify Documents - Frontend
 
-This is the **frontend** of a Document Management System (DMS) built using **React** and **Bootstrap CSS**. It allows users to log in via **OTP**, upload documents, search for documents, and manage files efficiently.  
+Simplify Documents is the **frontend Project** to manage documents (Document Management Sysytem), built using **React** and **Bootstrap CSS**. It allows users to log in via **OTP**, upload documents, search for documents, and manage files efficiently.  
 
 ---
 
