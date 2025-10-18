@@ -10,7 +10,6 @@ export default function UploadFile({ token }) {
   const [remarks, setRemarks] = useState("");
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
-  const [userId, setUserId] = useState("");
 
 const minorOptions =
 majorHead === "Personal"
@@ -42,7 +41,6 @@ const handleUpload = async () => {
     document_date: documentDate || "12-02-2024",
     document_remarks: remarks || "No remarks",
     tags: tags.length > 0 ? tags.map((t) => ({ tag_name: t })) : [{ tag_name: "" }],
-    user_id: userId || "nitin",
   };
 
   setLoading(true);
@@ -66,11 +64,11 @@ const handleUpload = async () => {
   <div className="row justify-content-center">
     <div className="col-12 col-md-8 col-lg-6">
       <div className="card shadow-lg border-0 rounded-4">
-        <div className="card-header text-white text-center py-3"
+        <div className="card-header text-white text-center py-4"
           style={{ backgroundColor: "#202B51" }}
 
         >
-          <h4 className="mb-0">Upload Document</h4>
+          <h4 className="m-0 fw-semibold">Upload Document</h4>
         </div>
         <div className="card-body p-4 rounded-bottom"
         style={{ backgroundColor: "#DDE3FA" }}>
@@ -171,17 +169,6 @@ const handleUpload = async () => {
               </div>
             </div>
 
-            {/* User ID */}
-            <div className="mb-3">
-              <label className="form-label fw-semibold">User ID</label>
-              <input
-                type="text"
-                placeholder="User ID"
-                value={userId}
-                onChange={(e) => setUserId(e.target.value.toLowerCase())}
-                className="form-control"
-              />
-            </div>
 
             {/* File Upload */}
             <div className="mb-4">

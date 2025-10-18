@@ -67,7 +67,11 @@ function Login() {
       <Card style={{ width: "350px" }}>
         <Card.Body className="shadow-lg">
 
-          <h3 className="text-center mb-4 bg-primary bg-subtle text-white rounded p-3" style={{"color" : "#202B51 !important"}}>Login</h3>
+          <h3 className="text-center mb-4  text-white rounded p-3" 
+          style={{ backgroundColor: "#202B51" }}
+          >
+            Login
+          </h3>
           <img src="./DocumentManagement.png" alt="img" style={{"width" : "300px"}} />
           <h2 style={{"color" : "#202B51 !important"}} className="text-primary fs-4 text-center fw-semibold p-3">Document <br /> Management System</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -75,22 +79,24 @@ function Login() {
           {step === 1 ? (
             <>
               <Form.Group className="mb-3">
-                <label className="ms-2">Enter Mobile Number</label>
+                <label className="ms-1">Enter Mobile Number</label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter Here..."
+                  placeholder="99XXXXXXXX"
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
-                  className="mt-3"
+                  className="mt-1"
                 />
               </Form.Group>
+              <p className="text-secondary text-opacity-50 text-center">We will send you one time <br /> password(OTP).</p>
+
               <Button
-                variant="primary"
+                variant="primary rounded-lg"
                 onClick={handleGenerateOTP}
                 disabled={loading}
                 className="w-100"
               >
-                {loading ? <Spinner animation="border" size="sm" /> : "Send OTP"}
+                {loading ? <Spinner animation="border" size="sm" /> : "Send"}
               </Button>
             </>
           ) : (
@@ -109,7 +115,7 @@ function Login() {
                 disabled={loading}
                 className="w-100"
               >
-                {loading ? <Spinner animation="border" size="sm" /> : "Validate OTP"}
+                {loading ? <Spinner animation="border" size="sm" /> : "Verify"}
               </Button>
             </>
           )}
