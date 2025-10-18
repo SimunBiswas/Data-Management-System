@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 const FilePreview = ({ file, onClose }) => {
   const [loading, setLoading] = useState(true);
-  const [showPreview, setShowPreview] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 300);
@@ -13,9 +12,7 @@ const FilePreview = ({ file, onClose }) => {
     <div
       className="modal fade show d-block"
       tabIndex="-1"
-      style={{
-        backgroundColor: "rgba(0,0,0,0.7)",
-      }}
+      style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
     >
       <div className="modal-dialog modal-lg modal-dialog-centered">
         <div className="modal-content">
@@ -31,31 +28,24 @@ const FilePreview = ({ file, onClose }) => {
           <div className="modal-body text-center">
             {loading ? (
               <p>Loading...</p>
-            ) : showPreview ? (
-              <>
-                {file.type === "image" ? (
-                  <img
-                    src={file.url}
-                    alt="Preview"
-                    className="img-fluid rounded"
-                    style={{ maxHeight: "500px" }}
-                  />
-                ) : (
-                  <p>No preview available for this file type</p>
-                )}
-              </>
-            ) : null}
+            ) : file.type === "image" ? (
+              <img
+                src={file.url}
+                alt="Preview"
+                className="img-fluid rounded"
+                style={{ maxHeight: "500px" }}
+              />
+            ) : (
+              <p>No preview available for this file type</p>
+            )}
 
             <p className="mt-3 text-muted">
-              {file.document_remarks || "No doucument found"}
+              {file.document_remarks || "No document found"}
             </p>
           </div>
 
           <div className="modal-footer">
-            <button
-              className="btn btn-secondary"
-              onClick={onClose}
-            >
+            <button className="btn btn-secondary" onClick={onClose}>
               Close
             </button>
           </div>
