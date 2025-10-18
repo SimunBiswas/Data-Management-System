@@ -73,7 +73,7 @@ function Login() {
             LOGIN
           </h3>
           <img src="./DocumentManagement.png" alt="img" style={{"width" : "300px"}} />
-          <h2 style={{"color" : "#202B51 !important"}} className="text-primary-emphasis fs-4 text-center fw-bold p-4">Document <br /> Management System</h2>
+          <h2 style={{"color" : "#202B51 !important"}} className="text-primary-emphasis fs-4 text-center fw-bolder p-4">OTP Verification</h2>
           {error && <Alert variant="danger">{error}</Alert>}
 
           {step === 1 ? (
@@ -94,7 +94,7 @@ function Login() {
                 variant="primary rounded-lg"
                 onClick={handleGenerateOTP}
                 disabled={loading}
-                className="w-100"
+                className="w-100 mb-2"
               >
                 {loading ? <Spinner animation="border" size="sm" /> : "Send"}
               </Button>
@@ -113,7 +113,7 @@ function Login() {
                 variant="success"
                 onClick={handleValidateOTP}
                 disabled={loading}
-                className="w-100"
+                className="w-100 mb-2"
               >
                 {loading ? <Spinner animation="border" size="sm" /> : "Verify"}
               </Button>
