@@ -67,10 +67,10 @@ function Login() {
       <Card style={{ width: "350px" }}>
         <Card.Body className="shadow-lg">
 
-          <h3 className="text-center mb-4  text-white rounded p-3" 
-          style={{ backgroundColor: "#202B51" }}
+          <h3 className="text-center rounded p-3 fw-bolder" 
+          style={{ color: "#202B51" }}
           >
-            Login
+            LOGIN
           </h3>
           <img src="./DocumentManagement.png" alt="img" style={{"width" : "300px"}} />
           <h2 style={{"color" : "#202B51 !important"}} className="text-primary fs-4 text-center fw-semibold p-3">Document <br /> Management System</h2>
