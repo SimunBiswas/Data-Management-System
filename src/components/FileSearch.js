@@ -16,7 +16,6 @@ const FileSearch = ({ token }) => {
   const [previewFile, setPreviewFile] = useState(null);
   const [loading, setLoading] = useState(false);
   
-
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -140,7 +139,11 @@ const FileSearch = ({ token }) => {
     const ext = file.file_url.split(".").pop().split("?")[0].toLowerCase();
     if (["png", "jpg", "jpeg", "gif"].includes(ext)) {
       // Show image preview
-      setPreviewFile({ type: "image", url: file.file_url, name: file.major_head });
+      setPreviewFile({
+        type: "image",
+        url: file.file_url, // keep as-is
+        document_remarks: file.document_remarks || file.document_name || "",
+      });
     } else if (ext === "pdf") {
       // Open PDF in new tab
       window.open(file.file_url, "_blank");
@@ -445,8 +448,12 @@ const FileSearch = ({ token }) => {
 
               {/* Preview Modal */}
               {previewFile && (
-                <FilePreview file={previewFile} onClose={() => setPreviewFile(null)} />
-              )}
+                  <FilePreview
+                    file={previewFile}
+                    onClose={() => setPreviewFile(null)}
+                  />
+                )}
+
             </div>
           </div>
         </div>
